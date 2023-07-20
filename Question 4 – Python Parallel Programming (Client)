@@ -1,0 +1,24 @@
+// Question 4 – Python Parallel Programming (Client)
+import socket
+
+def main():
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_host = "192.168.159.135"  # Loopback address for localhost
+    server_port = 8888
+
+    try:
+        client_socket.connect((server_host, server_port))
+        print("Connected to the QOTD Server.")
+
+        quote = client_socket.recv(1024)
+        print("Quote of the Day:", quote.decode())
+
+    except ConnectionRefusedError:
+        print("Error: The server is not running or not reachable.")
+    except Exception as e:
+        print("Error:", e)
+
+    client_socket.close()
+
+if __name__ == "__main__":
+    main()
