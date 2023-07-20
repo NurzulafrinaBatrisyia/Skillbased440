@@ -1,0 +1,29 @@
+// Question 3 – Python Socket Programming (Client)
+import socket
+
+def main():
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_host = "192.168.159.135"  # Loopback address for localhost
+    server_port = 8443
+
+    try:
+        client_socket.connect((server_host, server_port))
+        print("Connected to the server.")
+
+        pressure_bar = float(input("Enter the pressure in bar: "))
+        client_socket.send(str(pressure_bar).encode())
+
+        atmosphere_standard = client_socket.recv(1024)
+        print("Atmosphere-standard value received from server:", atmosphere_standard.decode())
+
+    except ConnectionRefusedError:
+        print("Error: The server is not running or not reachable.")
+    except ValueError:
+        print("Error: Invalid input. Please enter a valid pressure value in bar.")
+    except Exception as e:
+        print("Error:", e)
+
+    client_socket.close()
+
+if __name__== "__main__":
+     main()
